@@ -9,6 +9,8 @@ import javax.swing.*;
 import Controller.System;
 import View.*;
 import Model.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 /**
  *
  * @author Youssef
@@ -32,6 +34,10 @@ public class Landing_System extends JFrame{
 		return new Dimension(100,100);
 	}	
 }
+    class ButtonListener implements ActionListener{
+        public void actionPerformed(ActionEvent e) {    
+        } 
+    }
     public Landing_System()
     {
         super("landing system");
