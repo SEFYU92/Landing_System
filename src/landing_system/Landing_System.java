@@ -14,7 +14,6 @@ import Model.*;
  * @author Youssef
  */
 public class Landing_System extends JFrame{
-    private
     public Landing_System()
     {
         super("landing system");
