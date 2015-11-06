@@ -14,17 +14,41 @@ import Model.*;
  * @author Youssef
  */
 public class Landing_System extends JFrame{
+    class Lightbulb extends JComponent {
+	public void paintComponent(Graphics gc) {
+		
+		
+		
+			gc.setColor(Color.BLACK);
+		
+		gc.fillOval(0, 0, 100, 100);
+	}
+	public Dimension getPreferredSize() {
+		return new Dimension(100,100);
+	}	
+}
     public Landing_System()
     {
         super("landing system");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400,400);
+        JPanel panel = new JPanel();	
+	add(panel);
+        JToggleButton button = new JToggleButton("up/down");
+		panel.add(button);
+                Lightbulb bulb1 = new Lightbulb();
+		panel.add(bulb1);
+                Lightbulb bulb2 = new Lightbulb();
+		panel.add(bulb2);
+                Lightbulb bulb3 = new Lightbulb();
+		panel.add(bulb3);
+        //setSize(400,400);
         //JToggleButton button = new JToggleButton();
         //button.setBounds(10,10,10,10);
         //super.add(button);
+                pack();
         setVisible(true);
     }
-    public void paint (Graphics g)
+    /*public void paint (Graphics g)
     {
         super.paint(g);
         //g.drawOval(25,30,100,100);
@@ -32,7 +56,7 @@ public class Landing_System extends JFrame{
         g.fillOval(25,30,100,100);
         g.fillOval(25,130,100,100);
         g.fillOval(25,230,100,100);
-    }
+    }*/
     /**
      * @param args the command line arguments
      */
