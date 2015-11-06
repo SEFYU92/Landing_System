@@ -6,22 +6,37 @@
 package landing_system;
 import java.awt.*;
 import javax.swing.*;
-
+import Controller.System;
+import View.*;
+import Model.*;
 /**
  *
  * @author Youssef
  */
-public class Landing_System {
-
+public class Landing_System extends JFrame{
+    private
+    public Landing_System()
+    {
+        super("landing system");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(400,400);
+        setVisible(true);
+    }
+    public void paint (Graphics g)
+    {
+        super.paint(g);
+        //g.drawOval(25,30,100,100);
+        g.setColor(Color.GRAY);
+        g.fillOval(25,30,100,100);
+        g.fillOval(25,130,100,100);
+        g.fillOval(25,230,100,100);
+    }
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        JFrame gui = new JFrame("landing system");
-        gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        gui.pack();
-        gui.setVisible(true);
+        Landing_System ls = new Landing_System();
     }
     
 }
