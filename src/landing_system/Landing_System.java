@@ -11,6 +11,8 @@ import View.*;
 import Model.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 /**
  *
  * @author Youssef
@@ -27,7 +29,9 @@ public class Landing_System extends JFrame{
     private Lever lever;
     class Lightbulb extends JComponent {
 	public void paintComponent(Graphics gc) {
-            gc.setColor(Color.BLACK);
+            if(dashboard.GreenLight)
+            gc.setColor(Color.GREEN);
+            else gc.setColor(Color.BLACK);
             gc.fillOval(0, 0, 100, 100);
 	}
 	public Dimension getPreferredSize() {
@@ -54,6 +58,31 @@ public class Landing_System extends JFrame{
         JPanel panel = new JPanel();	
 	add(panel);
         JToggleButton button = new JToggleButton("up/down");
+        button.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent ev) {
+                if(ev.getStateChange()==ItemEvent.SELECTED)
+                {
+                    lever.pull();
+                    system.wheelsOutProcess();
+                    dashboard.setOrangeLight(true);
+                    door1.open();
+                    wheel1.deploy();
+                    dashboard.setGreenLight(true);
+                    repaint();
+                } 
+                else if(ev.getStateChange()==ItemEvent.DESELECTED)
+                {
+                    lever.push();
+                    system.WheelsInProcess();
+                    dashboard.setOrangeLight(true);
+                    door1.close();
+                    wheel1.retract();
+                    dashboard.setGreenLight(false);
+                    repaint();
+                }
+            }
+        });
 	panel.add(button);
         Lightbulb bulb1 = new Lightbulb();
         panel.add(bulb1);

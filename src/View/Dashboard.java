@@ -10,9 +10,9 @@ package View;
  * @author Youssef
  */
 public class Dashboard {
-    private boolean GreenLight;
-    private boolean RedLight;
-    private boolean OrangeLight;
+    public boolean GreenLight;
+    public boolean RedLight;
+    public boolean OrangeLight;
     public Dashboard()
     {
         GreenLight = false;
