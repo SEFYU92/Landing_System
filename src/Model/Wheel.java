@@ -5,20 +5,30 @@
  */
 package Model;
 
+import java.util.Observable;
+
 /**
  *
- * @author Youssef
+ * @author Nicolas_2
  */
-public class Wheel {
-    private boolean state;
-    public Wheel()
-    {
-        state = false;
+public class Wheel extends Observable {
+
+    private WheelState state;
+    private Position position;
+    
+    public Wheel(Position position){
+        this.position = position;
     }
-    public void deploy(){
-        this.state = true;
+
+    public void deploy() {
+        this.state = WheelState.DEPLOYED;
+        setChanged();
+        notifyObservers(this.state);
     }
-    public void retract(){
-        this.state = false;
+
+    public void retract() {
+        this.state = WheelState.RETRACTED;
+        setChanged();
+        notifyObservers(this.state);
     }
 }

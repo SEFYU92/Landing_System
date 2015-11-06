@@ -5,21 +5,30 @@
  */
 package Model;
 
+import java.util.Observable;
+
 /**
  *
- * @author Youssef
+ * @author Nicolas_2
  */
-public class Door {
-    private boolean state;
-    public Door()
-    {
-        state = false;
-    }
-    public void open(){
-        this.state = true;
+public class Door extends Observable{
+
+    private DoorState state;
+    private Position position;
+    
+    public Door(Position position){
+        this.position = position;
     }
     
-    public void close(){
-        this.state = false;
+    public void open() {
+        this.state = DoorState.OPEN;
+        setChanged();
+        notifyObservers(this.state);
+    }
+
+    public void close() {
+        this.state = DoorState.CLOSE;
+        setChanged();
+        notifyObservers(this.state);
     }
 }
