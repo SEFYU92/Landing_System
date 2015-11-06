@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package landing_system;
+import java.awt.*;
+import javax.swing.*;
 
 /**
  *
@@ -16,6 +18,10 @@ public class Landing_System {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        JFrame gui = new JFrame("landing system");
+        gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gui.pack();
+        gui.setVisible(true);
     }
     
 }
