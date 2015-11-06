@@ -10,5 +10,17 @@ package View;
  * @author Youssef
  */
 public class Lever {
-    
+    private boolean state;
+    public Lever()
+    {
+        state = false;
+    }
+    public void pull()
+    {
+        state = true;
+    }
+    public void push()
+    {
+        state = false;
+    }
 }
