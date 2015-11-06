@@ -19,6 +19,9 @@ public class Landing_System extends JFrame{
         super("landing system");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400,400);
+        //JToggleButton button = new JToggleButton();
+        //button.setBounds(10,10,10,10);
+        //super.add(button);
         setVisible(true);
     }
     public void paint (Graphics g)
