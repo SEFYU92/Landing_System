@@ -14,14 +14,19 @@ import Model.*;
  * @author Youssef
  */
 public class Landing_System extends JFrame{
+    private System system;
+    private Door door1;
+    private Door door2;
+    private Door door3;
+    private Wheel wheel1;
+    private Wheel wheel2;
+    private Wheel wheel3;
+    private Dashboard dashboard;
+    private Lever lever;
     class Lightbulb extends JComponent {
 	public void paintComponent(Graphics gc) {
-		
-		
-		
-			gc.setColor(Color.BLACK);
-		
-		gc.fillOval(0, 0, 100, 100);
+            gc.setColor(Color.BLACK);
+            gc.fillOval(0, 0, 100, 100);
 	}
 	public Dimension getPreferredSize() {
 		return new Dimension(100,100);
@@ -30,22 +35,31 @@ public class Landing_System extends JFrame{
     public Landing_System()
     {
         super("landing system");
+        system = new System();
+        door1 = new Door();
+        door2 = new Door();
+        door3 = new Door();
+        wheel1 = new Wheel();
+        wheel2 = new Wheel();
+        wheel3 = new Wheel();
+        dashboard = new Dashboard();
+        lever = new Lever();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel panel = new JPanel();	
 	add(panel);
         JToggleButton button = new JToggleButton("up/down");
-		panel.add(button);
-                Lightbulb bulb1 = new Lightbulb();
-		panel.add(bulb1);
-                Lightbulb bulb2 = new Lightbulb();
-		panel.add(bulb2);
-                Lightbulb bulb3 = new Lightbulb();
-		panel.add(bulb3);
+	panel.add(button);
+        Lightbulb bulb1 = new Lightbulb();
+        panel.add(bulb1);
+        Lightbulb bulb2 = new Lightbulb();
+        panel.add(bulb2);
+        Lightbulb bulb3 = new Lightbulb();
+        panel.add(bulb3);
         //setSize(400,400);
         //JToggleButton button = new JToggleButton();
         //button.setBounds(10,10,10,10);
         //super.add(button);
-                pack();
+        pack();
         setVisible(true);
     }
     /*public void paint (Graphics g)
@@ -63,6 +77,5 @@ public class Landing_System extends JFrame{
     public static void main(String[] args) {
         // TODO code application logic here
         Landing_System ls = new Landing_System();
-    }
-    
+    } 
 }
