@@ -5,26 +5,20 @@
  */
 package Controller;
 
+import View.SystemMonitor;
+
 /**
  *
  * @author Youssef
  */
 public class System {
-    private boolean WheelState;
-    private boolean DoorState;
-    public System()
-    {
-        WheelState = false;
-        DoorState = false;
-    }
-    public void wheelsOutProcess()
-    {
-        WheelState = true;
-        DoorState = true;
-    }
-    public void WheelsInProcess()
-    {
-        WheelState = false;
-        DoorState = false;
+    
+    /*
+     * Main Method
+     */
+    public static void main(String[] args){
+        
+        // Launch GUI Interface
+        new SystemMonitor().setVisible(true);
     }
 }
