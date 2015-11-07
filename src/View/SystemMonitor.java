@@ -5,26 +5,92 @@
  */
 package View;
 
-import java.awt.BorderLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import Model.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.image.BufferedImage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.Action;
+import javax.swing.JFrame;
+import javax.swing.Timer;
 
 /**
  *
  * @author Nicolas_2
  */
-public class SystemMonitor extends javax.swing.JFrame {
+public class SystemMonitor extends JFrame {
+
+    BufferedImage door_closed;
+    BufferedImage door_opened;
+    BufferedImage feu_orange;
+    BufferedImage feu_rouge;
+    BufferedImage feu_vert;
+    BufferedImage feu_vide;
+    BufferedImage gear_extracted;
+    BufferedImage gear_retracted;
+    Lever lever;
+    Door[] doors;
+    Wheel wheels[];
+    private Light light;
+    private static int cnt;
 
     /**
      * Creates new form SystemMonitor
+     *
+     * @param lever
+     * @param wheels
+     * @param doors
+     * @param light
      */
-    public SystemMonitor() {
+    public SystemMonitor(Lever lever, Wheel wheels[], Door doors[], Light light) {
+
+        super("Landing System Monitor");
+
+        this.lever = lever;
+        this.wheels = wheels;
+        this.doors = doors;
+        this.light = light;
+
+        ActionListener pullListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                lever.endPull();
+                repaint();
+            }
+        };
+        ActionListener pushListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                lever.endPush();
+                repaint();
+            }
+        };
+        Timer timerPull = new Timer(2000, pullListener);
+        timerPull.setRepeats(false);
+        Timer timerPush = new Timer(2000, pushListener);
+        timerPush.setRepeats(false);
+
         initComponents();
+        // Add Listener on toggle button
+        upDownToggleButton.addItemListener((ItemEvent ev) -> {
+            if (ev.getStateChange() == ItemEvent.SELECTED) {
+                lever.startPull();
+                repaint();
+                timerPull.start();
+                upDownToggleButton.setText("PUSH");
+            } else if (ev.getStateChange() == ItemEvent.DESELECTED) {
+                lever.startPush();
+                repaint();
+                timerPush.start();
+                upDownToggleButton.setText("PULL");
+            }
+        });
 
-        ImageIcon image = new ImageIcon("ImageLibrary/feu_rouge.jpg");
-        JLabel label = new JLabel("", image, JLabel.CENTER);
-        lightsPanel.add(label, BorderLayout.CENTER);
-
+        pack();
+        setVisible(true);
     }
 
     /**
@@ -38,63 +104,71 @@ public class SystemMonitor extends javax.swing.JFrame {
 
         jSplitPane1 = new javax.swing.JSplitPane();
         jSplitPane2 = new javax.swing.JSplitPane();
-        leverPanel = new javax.swing.JPanel();
-        lightsPanel = new javax.swing.JPanel();
+        leverPanel = new PanelLever(lever);
+        upDownToggleButton = new javax.swing.JToggleButton();
+        wheelsPanel = new PanelWheels(wheels);
         jSplitPane3 = new javax.swing.JSplitPane();
-        wheelsPanel = new javax.swing.JPanel();
-        doorsPanel = new javax.swing.JPanel();
+        lightsPanel = new PanelLights(light);
+        doorsPanel = new PanelDoors(doors);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 600));
 
         jSplitPane1.setDividerLocation(400);
 
         jSplitPane2.setDividerLocation(300);
         jSplitPane2.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
+        upDownToggleButton.setText("PULL");
+
         javax.swing.GroupLayout leverPanelLayout = new javax.swing.GroupLayout(leverPanel);
         leverPanel.setLayout(leverPanelLayout);
         leverPanelLayout.setHorizontalGroup(
             leverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 397, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leverPanelLayout.createSequentialGroup()
+                .addContainerGap(266, Short.MAX_VALUE)
+                .addComponent(upDownToggleButton)
+                .addGap(76, 76, 76))
         );
         leverPanelLayout.setVerticalGroup(
             leverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(leverPanelLayout.createSequentialGroup()
+                .addGap(64, 64, 64)
+                .addComponent(upDownToggleButton)
+                .addContainerGap(212, Short.MAX_VALUE))
         );
 
         jSplitPane2.setTopComponent(leverPanel);
 
-        javax.swing.GroupLayout lightsPanelLayout = new javax.swing.GroupLayout(lightsPanel);
-        lightsPanel.setLayout(lightsPanelLayout);
-        lightsPanelLayout.setHorizontalGroup(
-            lightsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout wheelsPanelLayout = new javax.swing.GroupLayout(wheelsPanel);
+        wheelsPanel.setLayout(wheelsPanelLayout);
+        wheelsPanelLayout.setHorizontalGroup(
+            wheelsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 397, Short.MAX_VALUE)
         );
-        lightsPanelLayout.setVerticalGroup(
-            lightsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 491, Short.MAX_VALUE)
+        wheelsPanelLayout.setVerticalGroup(
+            wheelsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 176, Short.MAX_VALUE)
         );
 
-        jSplitPane2.setRightComponent(lightsPanel);
+        jSplitPane2.setRightComponent(wheelsPanel);
 
         jSplitPane1.setLeftComponent(jSplitPane2);
 
         jSplitPane3.setDividerLocation(300);
         jSplitPane3.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
-        javax.swing.GroupLayout wheelsPanelLayout = new javax.swing.GroupLayout(wheelsPanel);
-        wheelsPanel.setLayout(wheelsPanelLayout);
-        wheelsPanelLayout.setHorizontalGroup(
-            wheelsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout lightsPanelLayout = new javax.swing.GroupLayout(lightsPanel);
+        lightsPanel.setLayout(lightsPanelLayout);
+        lightsPanelLayout.setHorizontalGroup(
+            lightsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 392, Short.MAX_VALUE)
         );
-        wheelsPanelLayout.setVerticalGroup(
-            wheelsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+        lightsPanelLayout.setVerticalGroup(
+            lightsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 119, Short.MAX_VALUE)
         );
 
-        jSplitPane3.setTopComponent(wheelsPanel);
+        jSplitPane3.setTopComponent(lightsPanel);
 
         javax.swing.GroupLayout doorsPanelLayout = new javax.swing.GroupLayout(doorsPanel);
         doorsPanel.setLayout(doorsPanelLayout);
@@ -104,7 +178,7 @@ public class SystemMonitor extends javax.swing.JFrame {
         );
         doorsPanelLayout.setVerticalGroup(
             doorsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 491, Short.MAX_VALUE)
+            .addGap(0, 176, Short.MAX_VALUE)
         );
 
         jSplitPane3.setRightComponent(doorsPanel);
@@ -119,7 +193,7 @@ public class SystemMonitor extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
         );
 
         pack();
@@ -132,6 +206,8 @@ public class SystemMonitor extends javax.swing.JFrame {
     private javax.swing.JSplitPane jSplitPane3;
     private javax.swing.JPanel leverPanel;
     private javax.swing.JPanel lightsPanel;
+    private javax.swing.JToggleButton upDownToggleButton;
     private javax.swing.JPanel wheelsPanel;
     // End of variables declaration//GEN-END:variables
+
 }

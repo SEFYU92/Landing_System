@@ -6,29 +6,55 @@
 package Model;
 
 import java.util.Observable;
+import java.util.Observer;
 
 /**
  *
  * @author Nicolas_2
  */
-public class Wheel extends Observable {
+public class Wheel implements Observer {
 
     private WheelState state;
-    private Position position;
-    
-    public Wheel(Position position){
+    private final Position position;
+
+    public Wheel(Position position) {
         this.position = position;
+        retract();
     }
 
-    public void deploy() {
+    private void deploy() {
         this.state = WheelState.DEPLOYED;
-        setChanged();
-        notifyObservers(this.state);
     }
 
-    public void retract() {
+    private void retract() {
         this.state = WheelState.RETRACTED;
-        setChanged();
-        notifyObservers(this.state);
+    }
+    
+    private void move() {
+        this.state = WheelState.MOVING;
+    }
+
+    @Override
+    public void update(Observable obs, Object arg) {
+
+        if (obs instanceof Lever) {
+            if (arg instanceof ManoeuvreState) {
+                ManoeuvreState manoeuvreState = (ManoeuvreState) arg;
+
+                if (manoeuvreState == ManoeuvreState.START_PULL) {
+                    move();
+                } else if (manoeuvreState == ManoeuvreState.END_PULL) {
+                    deploy();
+                } else if (manoeuvreState == ManoeuvreState.START_PUSH) {
+                    move();
+                } else if (manoeuvreState == ManoeuvreState.END_PUSH) {
+                    retract();
+                }
+            } 
+        }
+    }
+
+    public WheelState getState() {
+        return state;
     }
 }

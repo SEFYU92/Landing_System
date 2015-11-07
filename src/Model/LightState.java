@@ -10,6 +10,6 @@ package Model;
  *
  * @author Nicolas_2
  */
-public enum WheelState {
-    DEPLOYED, MOVING, RETRACTED
+public enum LightState {
+    OFF, ORANGE, GREEN, RED
 }

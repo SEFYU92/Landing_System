@@ -12,22 +12,28 @@ import java.util.Observer;
  *
  * @author Nicolas_2
  */
-public class Door implements Observer {
+public class Light implements Observer {
 
-    private DoorState state;
-    private final Position position;
+    private LightState state;
 
-    public Door(Position position) {
-        this.position = position;
-        close();
+    public Light() {
+        state = LightState.OFF;
     }
 
-    private void open() {
-        this.state = DoorState.OPEN;
+    private void greenLight() {
+        this.state = LightState.GREEN;
     }
 
-    private void close() {
-        this.state = DoorState.CLOSE;
+    private void redLight() {
+        this.state = LightState.RED;
+    }
+
+    private void orangeLight() {
+        this.state = LightState.ORANGE;
+    }
+
+    private void offLight() {
+        this.state = LightState.OFF;
     }
 
     @Override
@@ -38,23 +44,21 @@ public class Door implements Observer {
                 ManoeuvreState manoeuvreState = (ManoeuvreState) arg;
 
                 if (manoeuvreState == ManoeuvreState.START_PULL) {
-                    move();
+                    orangeLight();
                 } else if (manoeuvreState == ManoeuvreState.END_PULL) {
-                    open();
+                    greenLight();
                 } else if (manoeuvreState == ManoeuvreState.START_PUSH) {
-                    move();
+                    orangeLight();
                 } else if (manoeuvreState == ManoeuvreState.END_PUSH) {
-                    close();
+                    offLight();
                 }
+            } else {
+                redLight();
             }
         }
     }
 
-    public DoorState getState() {
-        return this.state;
-    }
-
-    private void move() {
-        this.state = DoorState.MOVING;
+    public LightState getState() {
+        return state;
     }
 }

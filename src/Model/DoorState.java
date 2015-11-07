@@ -11,5 +11,5 @@ package Model;
  * @author Nicolas_2
  */
 public enum DoorState {
-    OPEN, CLOSE
+    OPEN, MOVING, CLOSE
 }
