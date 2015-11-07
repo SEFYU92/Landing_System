@@ -42,20 +42,6 @@ public class Lever extends Observable {
         setChanged();
         notifyObservers(ManoeuvreState.END_PUSH);
     }
-            
-    public void pull() {
-        state = LeverState.DOWN;
-        System.out.println("Lever " + state);
-        setChanged();
-        notifyObservers(this.state);
-    }
-
-    public void push() {
-        state = LeverState.UP;
-        System.out.println("Lever " + state);
-        setChanged();
-        notifyObservers(this.state);
-    }
 
     public LeverState getState() {
         return state;

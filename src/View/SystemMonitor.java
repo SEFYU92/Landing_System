@@ -23,19 +23,10 @@ import javax.swing.Timer;
  */
 public class SystemMonitor extends JFrame {
 
-    BufferedImage door_closed;
-    BufferedImage door_opened;
-    BufferedImage feu_orange;
-    BufferedImage feu_rouge;
-    BufferedImage feu_vert;
-    BufferedImage feu_vide;
-    BufferedImage gear_extracted;
-    BufferedImage gear_retracted;
-    Lever lever;
-    Door[] doors;
-    Wheel wheels[];
+    private Lever lever;
+    private Door[] doors;
+    private Wheel[] wheels;
     private Light light;
-    private static int cnt;
 
     /**
      * Creates new form SystemMonitor
